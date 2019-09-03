@@ -13,6 +13,9 @@ class ProfilePage extends Component{
   handleChangeField = (e) => {
     let editFields = this.state.editFields;
     editFields[e.target.name] = e.target.value;
+    if(e.target.name === "email") {
+      document.getElementById('field-email').setCustomValidity('');
+    }
     this.setState({ editFields });
   };
 
@@ -53,9 +56,19 @@ class ProfilePage extends Component{
     })
     .then(res => res.json())
     .then(body => {
-      tokenService.setToken(body.token);
-      this.props.handleLogin();
-      this.handleEditOff();
+      let error = body.error;
+      if(!!error) {
+        if(error.name === "ValidationError") {
+          let fieldname = Object.keys(error.errors)[0];
+          let field = document.getElementById(`field-${fieldname}`);
+          field.setCustomValidity(`this ${fieldname} has already been taken`);
+          field.reportValidity();
+        } else console.log(error);
+      } else {
+        tokenService.setToken(body.token);
+        this.props.handleLogin();
+        this.handleEditOff();
+      }
     })
     .catch(err => console.log(err));
   };

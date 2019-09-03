@@ -35,6 +35,9 @@ class SignupPage extends Component {
 					case 'username':
 						document.getElementById('field-username').setCustomValidity('');
 						break;
+					case 'email':
+							document.getElementById('field-email').setCustomValidity('');
+							break;
 					default: break;
 				}
 			}
@@ -44,7 +47,6 @@ class SignupPage extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.setState({ portraitUrl: Base64.encodeURI(this.state.portraitUrl)}, () => {
-			console.log(this.state)
 			userService.signup(this.state, (error) => {
 				if(!!error) {
 					if(error.name === "ValidationError") {
