@@ -27,7 +27,6 @@ class App extends Component {
 
   handleLogin = () => {
     let user = userService.getUser() || null;
-    //if(!!user) user.portraitUrl = Base64.decode(user.portraitUrl);
     this.setState({ user });
   };
 
