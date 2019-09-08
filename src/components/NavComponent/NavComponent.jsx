@@ -6,9 +6,11 @@ class NavComponent extends Component {
     return <nav style={{
       display: 'flex',
       justifyContent: 'space-around',
-      border: '1px solid black'
+      border: '1px solid black',
+      padding: '3px 0'
     }}>
       <Link to="/">Home</Link>
+      <Link to="/jobs">Jobs</Link>
       {this.props.user
       ? <>
           <Link to="/profile">Profile</Link>

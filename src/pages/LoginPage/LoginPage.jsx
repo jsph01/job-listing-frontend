@@ -31,11 +31,11 @@ class LoginPage extends Component {
 			<h2>Login</h2>
 			<form onSubmit={this.handleSubmit}>
 				<div>
-					<label>username:&nbsp;</label>
+					<label>username:{' '}</label>
 					<input type="text" name="username" id="field-username" required value={this.state.username} onChange={this.handleChangeField} />
 				</div>
 				<div>
-					<label>password:&nbsp;</label>
+					<label>password:{' '}</label>
 					<input type="password" name="password" required value={this.state.password} onChange={this.handleChangeField} />
 				</div>
 				<input type="submit" value="submit" />

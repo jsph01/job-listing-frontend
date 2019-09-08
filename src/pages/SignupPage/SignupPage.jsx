@@ -68,35 +68,35 @@ class SignupPage extends Component {
 			<h2>Signup Page</h2>
 			<form onSubmit={this.handleSubmit}>
 				<div>
-					<label>username:&nbsp;</label>
+					<label>username:{' '}</label>
 					<input type="text" name="username" id="field-username" required value={this.state.username} onChange={this.handleChangeField} />
 				</div>
 				<div>
-					<label>email:&nbsp;</label>
+					<label>email:{' '}</label>
 					<input type="email" name="email" id="field-email" required value={this.state.email} onChange={this.handleChangeField} />
 				</div>
 				<div>
-					<label>password:&nbsp;</label>
+					<label>password:{' '}</label>
 					<input type="password" name="password" required value={this.state.password} onChange={this.handleChangeField} />
 				</div>
 				<div>
-					<label>confirm password:&nbsp;</label>
+					<label>confirm password:{' '}</label>
 					<input type="password" name="password2" id="field-password2" required value={this.state.password2} onChange={this.handleChangeField} onKeyUp={this.validatePassword} />
 				</div>
 				<div>
-					<label>zipcode:&nbsp;</label>
+					<label>zipcode:{' '}</label>
 					<input type="text" name="zipcode" pattern="[0-9]{5}" required value={this.state.zipcode} onChange={this.handleChangeField} />
 				</div>
 				<div>
-					<label>first name:&nbsp;</label>
+					<label>first name:{' '}</label>
 					<input type="text" name="firstName" required value={this.state.firstName} onChange={this.handleChangeField} />
 				</div>
 				<div>
-					<label>last name:&nbsp;</label>
+					<label>last name:{' '}</label>
 					<input type="text" name="lastName" required value={this.state.lastName} onChange={this.handleChangeField} />
 				</div>
 				<div>
-					<label>profile image url:&nbsp;</label>
+					<label>profile image url:{' '}</label>
 					<input type="url" name="portraitUrl" value={this.state.portraitUrl} onChange={this.handleChangeField} />
 				</div>
 				<input type="submit" value="submit" />
