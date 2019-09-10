@@ -14,13 +14,13 @@ function login(userInfo, cb) {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ userInfo })
 	})
-	.then(res => res.json())
-	.then(body => {
-		if(body.token) tokenService.setToken(body.token)
-		else var error = true;
-		cb(error);
-	})
-	.catch(err => console.log(err));
+		.then(res => res.json())
+		.then(body => {
+			if(body.token) tokenService.setToken(body.token)
+			else var error = true;
+			cb(error);
+		})
+		.catch(console.log);
 }
 
 function signup(userInfo, cb) {
@@ -29,12 +29,12 @@ function signup(userInfo, cb) {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ userInfo })
 	})
-	.then(res => res.json())
-	.then(body => {
-		if(body.token) tokenService.setToken(body.token);
-		cb(body.error);
-	})
-	.catch(err => console.log(err));	
+		.then(res => res.json())
+		.then(body => {
+			if(body.token) tokenService.setToken(body.token);
+			cb(body.error);
+		})
+		.catch(console.log);	
 }
 
 export default {

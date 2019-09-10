@@ -13,7 +13,7 @@ class NewJobPage extends Component {
   }
 
   handleChangeField = (e) => {
-    let postInfo = this.state.postInfo;
+    let postInfo = {...this.state.postInfo};
     postInfo[e.target.name] = e.target.value;
     this.setState({ postInfo });
   };

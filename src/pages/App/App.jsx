@@ -34,13 +34,20 @@ class App extends Component {
   }; 
 
   addPost = (post) => {
-    console.log('adding post')
     let id = post._id;
     delete post._id;
-    let posts = this.state.posts;
+    let posts = {...this.state.posts};
     posts[id] = post;
     this.setState({ posts });
   };
+
+  removePost = (pk) => {
+    this.setState(state => {
+      let posts = this.state.posts;
+      delete posts[pk];
+      return { posts }
+    })
+  }
 
   handleLogin = () => {
     let user = userService.getUser() || null;
@@ -64,7 +71,7 @@ class App extends Component {
       });
       this.setState({ posts })
     })
-    .catch(err => console.log(err));
+    .catch(console.log);
   }
 
   render() {
@@ -84,30 +91,15 @@ class App extends Component {
           <Route exact path="/jobs" render={props => (
             <JobsListPage history={props.history} posts={this.state.posts} />
           )} />
-
           <PrivateRoute exact path="/jobs/new" cb={props => (
             <NewJobPage history={props.history} user={this.state.user} addPost={this.addPost} />
           )} />
-
-          {/* <PrivateRoute exact path="/jobs/new"
-            user={this.state.user}
-            component={NewJobPage}
-            cProps={{ addPost: this.addPost }}
-          /> */}
-
           <Route exact path="/jobs/:id" render={props => (
-            <JobPage history={props.history} user={this.state.user} postId={props.match.params.id} />
+            <JobPage history={props.history} user={this.state.user} postId={props.match.params.id} removePost={this.removePost} />
           )} />
-
           <PrivateRoute exact path="/profile" user={this.state.user} cb={props => (
             <ProfilePage user={this.state.user} handleLogin={this.handleLogin} />
-          )}/>
-
-          {/* <PrivateRoute exact path="/profile"
-            user={this.state.user}
-            component={ProfilePage}
-            cProps={{ handleLogin: this.handleLogin }}
-          /> */}          
+          )}/>        
         </Switch>
       </Router>
     </div>;

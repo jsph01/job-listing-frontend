@@ -4,7 +4,8 @@ import tokenService from '../../utils/tokenService';
 class ReplyComponent extends Component {
   state = {
     expanded: !this.props.isAuthor,
-    reply: ''
+    reply: this.props.reply,
+    newMessage: ''
   };
 
   toggleExpand = () => {
@@ -22,19 +23,47 @@ class ReplyComponent extends Component {
       },
       body: JSON.stringify({
         postId: this.props.postId,
-        replyId: this.props.reply._id || null,
-        reply: this.state.reply
+        replyId: this.state.reply._id || null,
+        reply: this.state.newMessage
       })
     })
     .then(res => res.json())
     .then(body => {
-      this.props.addReply(body.reply);
-      this.setState({ reply: ''});
+      this.props.addReply({
+        _id: body.reply._id,
+        message: body.reply.messages[body.reply.messages.length - 1]
+      });
+      this.setState({ newMessage: ''});
     })
     .catch(console.log);
   };
 
-  handleChange = (e) => this.setState({ reply: e.target.value});
+  handleChange = (e) => this.setState({ newMessage: e.target.value});
+
+  handleDelete = (e) => {
+    e.preventDefault();
+    let messageIdx = e.target.getAttribute('data-idx');
+    fetch(`http://localhost:3001/api/replies/${this.props.reply._id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenService.getToken()}`
+      },
+      body: JSON.stringify({
+        messageIdx,
+        postId: this.props.postId
+      })
+    })
+      .then(res => res.json())
+      .then(body => {
+        this.setState(state => {
+          let reply = state.reply;
+          reply.messages.splice(messageIdx, 1);
+          return ({ reply });
+        });
+      })
+      .catch(console.log);
+  };
 
   render() {
     return <div style = {{
@@ -60,13 +89,27 @@ class ReplyComponent extends Component {
           {this.props.reply.messages.map((message, idx) => (
             <div key={message._id}>
               {!!idx && <hr />}
-              <strong>{message.authorUsername}:{' '}</strong>
-              <span>{message.body}</span>
+              <span style={{
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}>
+                <span>
+                  <strong>{message.authorUsername}:{' '}</strong>
+                  <span>{message.body}</span>
+                </span>
+                {this.props.userUsername === message.authorUsername &&
+                  <form data-idx={idx} onSubmit={this.handleDelete} style={{ display: 'inline' }}>
+                    <input type="submit" value="x" />
+                  </form>}
+              </span>
             </div>
           ))}
           <br />
-          <form className="pure-form" onSubmit={this.handleSubmit}>
-            <input required type="text" placeholder="reply" style={{ width: '85%'}} onChange={this.handleChange} value={this.state.reply} />
+          <form className="pure-form" onSubmit={this.handleSubmit} style={{
+            display: 'grid',
+            gridTemplateColumns: '90% 10%'
+          }}>
+            <input required type="text" placeholder="reply" style={{ width: '100%'}} onChange={this.handleChange} value={this.state.newMessage} />
             <input type="submit" value="send" />
           </form>
         </div>}

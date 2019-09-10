@@ -8,7 +8,7 @@ class ProfilePage extends Component{
   };
 
   handleChangeField = (e) => {
-    let editFields = this.state.editFields;
+    let editFields = {...this.state.editFields};
     editFields[e.target.name] = e.target.value;
     if(e.target.name === "email") {
       document.getElementById('field-email').setCustomValidity('');
@@ -49,24 +49,24 @@ class ProfilePage extends Component{
       },
       body: JSON.stringify({ userInfo })
     })
-    .then(res => res.json())
-    .then(body => {
-      let error = body.error;
-      if(!!error) {
-        if(error.name === "ValidationError") {
-          let fieldname = Object.keys(error.errors)[0];
-          let field = document.getElementById(`field-${fieldname}`);
-          field.setCustomValidity(`this ${fieldname} has already been taken`);
-          field.reportValidity();
-        } else console.log(error);
-      } else {
-        tokenService.setToken(body.token);
-        this.props.handleLogin();
-        this.setState({ user: body.user })
-        this.handleEditOff();
-      }
-    })
-    .catch(err => console.log(err));
+      .then(res => res.json())
+      .then(body => {
+        let error = body.error;
+        if(!!error) {
+          if(error.name === "ValidationError") {
+            let fieldname = Object.keys(error.errors)[0];
+            let field = document.getElementById(`field-${fieldname}`);
+            field.setCustomValidity(`this ${fieldname} has already been taken`);
+            field.reportValidity();
+          } else console.log(error);
+        } else {
+          tokenService.setToken(body.token);
+          this.props.handleLogin();
+          this.setState({ user: body.user })
+          this.handleEditOff();
+        }
+      })
+      .catch(console.log);
   };
 
   componentDidMount() {
@@ -75,9 +75,9 @@ class ProfilePage extends Component{
         'Authorization': `Bearer ${tokenService.getToken()}`
       }
     })
-    .then(res => res.json())
-    .then(body => this.setState({ user: body.user }))
-    .catch(err => console.log(err));
+      .then(res => res.json())
+      .then(body => this.setState({ user: body.user }))
+      .catch(console.log);
   }
 
   render() {
