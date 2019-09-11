@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import NavComponent from '../../components/NavComponent/NavComponent.jsx';
+import LandingPage from '../LandingPage/LandingPage.jsx';
 import LoginPage from '../LoginPage/LoginPage.jsx';
 import SignupPage from '../SignupPage/SignupPage.jsx';
 import LogoutPage from '../LogoutPage/LogoutPage.jsx';
@@ -79,6 +80,9 @@ class App extends Component {
       <Router>
         <NavComponent user={this.state.user} />
         <Switch>
+          <Route exact path="/" render={props => (
+            <LandingPage {...props} />
+          )} />
           <Route exact path="/login" render={props => (
             <LoginPage {...props} handleLogin={this.handleLogin} />
           )} />
