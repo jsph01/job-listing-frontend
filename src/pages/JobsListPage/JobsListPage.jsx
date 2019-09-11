@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 class JobsPage extends Component {
   render() {
+    console.log(this.props.posts);
     return <>
       <h2>Jobs</h2>
       <table className="table">

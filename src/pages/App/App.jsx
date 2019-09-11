@@ -24,7 +24,7 @@ function PrivateRoute({ cb, ...rest }) {
   return <Route {...rest} render={props => {
     let component = cb(props);
     if(!!component.props.user) return component;
-    else return <Redirect to="/signup" />;
+    else return <Redirect to="/profile" />;
   }} />;
 }
 
@@ -64,6 +64,7 @@ class App extends Component {
     fetch('http://localhost:3001/api/posts')
     .then(res => res.json())
     .then(body => {
+      console.log(body.posts);
       let posts = {};
       body.posts.forEach(post => {
         let id = post._id;

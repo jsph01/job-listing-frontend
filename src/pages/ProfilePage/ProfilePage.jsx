@@ -138,7 +138,7 @@ class ProfilePage extends Component{
                   return (
                     <tr key={key}>
                       <th scope="row">{idx+1}</th>
-                      <td><Link to={`/jobs/${key}`}>{post.title}</Link></td>
+                      <td><Link to={`/jobs/${post._id}`}>{post.title}</Link></td>
                       <td><section to={`/jobs/${key}`}>{post.zipcode}</section></td>
                       <td><section to={`/jobs/${key}`}>{dateDisplay}</section></td>
                     </tr>
@@ -152,23 +152,23 @@ class ProfilePage extends Component{
         && <>
             <form onSubmit={this.handleSubmitEdit}>
               <div>
-                <label>email:{' '}</label>
+                <label>email:&nbsp;</label>
                 <input type="email" name="email" id="field-email" value={this.state.editFields.email} onChange={this.handleChangeField} />
               </div>
               <div>
-                <label>zipcode:{' '}</label>
+                <label>zipcode:&nbsp;</label>
                 <input type="text" name="zipcode" pattern="[0-9]{5}" value={this.state.editFields.zipcode} onChange={this.handleChangeField} />
               </div>
               <div>
-                <label>first name:{' '}</label>
+                <label>first name:&nbsp;</label>
                 <input type="text" name="firstName" value={this.state.editFields.firstName} onChange={this.handleChangeField} />
               </div>
               <div>
-                <label>last name:{' '}</label>
+                <label>last name:&nbsp;</label>
                 <input type="text" name="lastName" value={this.state.editFields.lastName} onChange={this.handleChangeField} />
               </div>
               <div>
-                <label>profile image url:{' '}</label>
+                <label>profile image url:&nbsp;</label>
                 <input type="url" name="portraitUrl" value={this.state.editFields.portraitUrl} onChange={this.handleChangeField} />
               </div>
               <div style={{ margin:'16px 40%'}}>
@@ -179,7 +179,7 @@ class ProfilePage extends Component{
               </div>
             </form>
           </>}
-          <h5 style={{ marginTop: 12 }}>Replies</h5>
+          {/* <h5 style={{ marginTop: 12 }}>Replies</h5> */}
           {/* {this.state.user.replies.map((reply, idx) => (
                 <ReplyComponent
                   key={`reply_${idx}`}
