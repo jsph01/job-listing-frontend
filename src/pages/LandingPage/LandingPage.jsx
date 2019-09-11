@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 function LandingPage() {
   return <>
+    <h3 style={{ marginTop: 32, textAlign: 'center'}}>WorkSpree</h3>
     <div style={{
       display: 'grid',
       gridTemplateColumns: '50% 50%'
@@ -16,8 +18,16 @@ function LandingPage() {
       display: 'flex',
       justifyContent: 'center'
     }}>
-      <button style={{ margin: '2px' }} className="btn btn-lg btn-outline-success">view jobs</button>
-      <button style={{ margin: '2px' }} className="btn btn-lg btn-outline-success">Sign Up</button>
+      <Link
+        className="btn btn-lg btn-outline-success"
+        to="/jobs"
+        style={{ margin: '2px' }}
+      > view jobs </Link>
+      <Link
+        className="btn btn-lg btn-outline-success"
+        to="/signup"
+        style={{ margin: '2px' }}
+      > Sign Up </Link>
     </div>
   </>;
 }

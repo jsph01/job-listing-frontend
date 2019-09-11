@@ -28,7 +28,7 @@ class LoginPage extends Component {
 	
 	render() {
 		return <>
-			<h2>Login</h2>
+			<h2 style={{ textAlign: 'center', margin: '32px 0' }}>Login</h2>
 			<form onSubmit={this.handleSubmit}>
 				<div>
 					<label>username:{' '}</label>
@@ -38,7 +38,9 @@ class LoginPage extends Component {
 					<label>password:{' '}</label>
 					<input type="password" name="password" required value={this.state.password} onChange={this.handleChangeField} />
 				</div>
-				<input type="submit" value="submit" />
+				<div style={{ justifyContent: 'center', margin:'16px 0'}}>
+					<input className="btn btn-success" type="submit" value="submit" />
+				</div>
 			</form>
 		</>;
 	}

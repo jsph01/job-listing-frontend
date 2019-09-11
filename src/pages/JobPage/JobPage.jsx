@@ -106,25 +106,29 @@ class JobPage extends Component {
         }}>
           <h2>{post.title}</h2>
           {this.state.isAuthor &&
-            <span style={{ margin: 'auto 0' }}>
-              <button onClick={this.handleEditOn}>edit</button>
+            <span style={{ margin: 'auto 0', width: 250}}>
+              <button className="btn btn-sm btn-info" onClick={this.handleEditOn}
+                style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
+              >edit</button>
               <form onSubmit={this.submitDelete} style={{ display: 'inline' }}>
-                <input type="submit" value="delete" />
+                <input className="btn btn-sm btn-danger" type="submit" value="delete"
+                  style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+                />
               </form>
             </span>}
         </span>
-        <label>Posted by:{' '}</label>
+        <label>Posted by:&nbsp;</label>
         <strong>{post.authorUsername}</strong>
         {this.state.editMode
         ? <div style={{ margin: '1em 0' }}>
             <form onSubmit={this.submitEdit}>
               <textarea onChange={this.handleChange} value={this.state.body} style={{ width: '100%' }} rows="15" />
-              <button type="button" onClick={this.handleEditOff}>cancel</button>
-              <input type="submit" value="save changes" />
+              <button className="btn btn-info" style={{ marginRight: 4 }} type="button" onClick={this.handleEditOff}>cancel</button>
+              <input className="btn btn-info" style={{ marginLeft: 4 }} type="submit" value="save changes" />
             </form>
           </div>
-        : <p>{post.body}</p>}
-        <p>zipcode:{' '}<strong>{post.zipcode}</strong></p>
+        : <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{post.body}</p>}
+        <p>zipcode:&nbsp;<strong>{post.zipcode}</strong></p>
         
         {(() => {
           if(!!post.replies.length)
@@ -148,7 +152,7 @@ class JobPage extends Component {
               Sign Up to reply to this post!
             </button>;
           else if(this.state.isAuthor)
-            return <i>you have no repies to this post yet.</i>;
+            return <i>you have no replies to this post yet.</i>;
         })()}
 
       </>

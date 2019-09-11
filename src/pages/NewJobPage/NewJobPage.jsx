@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import tokenService from '../../utils/tokenService';
 
+//import './NewJobPage.css';
+
 class NewJobPage extends Component {
   state = {
     postInfo: {
@@ -39,28 +41,29 @@ class NewJobPage extends Component {
   render() {
     return <>
       <h2>Create a job-listing</h2>
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <label>Title:{' '}</label>
-          <input required type="text" name="title" onChange={this.handleChangeField} value={this.state.postInfo.title} style={{ width: '100%' }} />
+      <form className="post-form" style={{margin: '0'}} onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="input-title">Title:&nbsp;</label>
+          <input className="form-control" id="input-title" required type="text" name="title" onChange={this.handleChangeField} value={this.state.postInfo.title} style={{ width: '100%' }} />
         </div>
         <div>
-          <p>Are you offering work or seeking it?:{' '}
-          <select type="text" name="kind" onChange={this.handleChangeField} value={this.state.postInfo.kind}>
+          <p>Are you offering work or seeking it?:&nbsp;&nbsp;
+          <select name="kind" onChange={this.handleChangeField} value={this.state.postInfo.kind}>
             <option>offering</option>
             <option>seeking</option>
           </select></p>
         </div>
         <div>
-          <section>Message Body:{' '}</section>
-          <textarea required type="text" name="body" onChange={this.handleChangeField} value={this.state.postInfo.body} style={{ width: '100%' }} rows="15" />
+          <section htmlFor="post-body">Message Body:&nbsp;</section>
+          <textarea className="form-control" id="post-body" required type="text" name="body" onChange={this.handleChangeField} value={this.state.postInfo.body} style={{ width: '100%' }} rows="10" />
         </div>
-        <div>
-          <p>zipcode:{' '}
-            <input required pattern="[0-9]{5}" type="text" name="zipcode" onChange={this.handleChangeField} value={this.state.postInfo.zipcode} size="5" maxLength="5" />
-          </p>
+        <div style={{ marginTop: '1em' }}>
+            <label htmlFor="post-zipcode">zipcode:&nbsp;</label>
+            <input id="post-zipcode" required pattern="[0-9]{5}" type="text" name="zipcode" onChange={this.handleChangeField} value={this.state.postInfo.zipcode} size="5" maxLength="5" />
         </div>
-        <input type="submit" value="post ad" />
+        <div style={{ justifyContent: 'flex-start', margin:'16px 0'}}>
+					<input className="btn btn-primary" type="submit" value="post ad" />
+				</div>
       </form>
     </>;
   }

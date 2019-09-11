@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import tokenService from '../../utils/tokenService';
 
 class ProfilePage extends Component{
@@ -84,25 +86,70 @@ class ProfilePage extends Component{
     return !!this.state.user
     ? <>
         <h2>Hello {this.state.user.firstName + ' ' + this.state.user.lastName}</h2>
-        <img src={this.state.user.portraitUrl} width="256px" alt="Profile" />
-        <div>
-          <div>
-            <label>username:{' '}</label>
-            <span>{this.state.user.username}</span>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '25% 75%'
+        }}>
+          <div className="card" style={{
+            margin: '0 8px',
+            textAlign: 'center',
+          }}>
+            <img className="card-img-top" src={this.state.user.portraitUrl} width="256px" alt="Profile" style={{ margin: 'auto' }} />
+            <div className="card-body">
+              <div>
+                <label>username:&nbsp;</label>
+                <strong>{this.state.user.username}</strong>
+              </div>
+              <div>
+                <label>email:&nbsp;</label>
+                <strong>{this.state.user.email}</strong>
+              </div>
+              <div>
+                <label>zipcode:&nbsp;</label>
+                <strong>{this.state.user.zipcode}</strong>
+              </div>
+              <div>
+                <label>number of posts:&nbsp;</label>
+                <strong>{this.state.user.posts.length}</strong>
+              </div>
+              {!this.state.editMode &&
+                <button
+                  className="btn btn-outline-info btn-sm"
+                  onClick={this.handleEditOn}
+                >edit info</button>}
+            </div>
           </div>
-          <div>
-            <label>email:{' '}</label>
-            <span>{this.state.user.email}</span>
-          </div>
-          <div>
-            <label>zipcode:{' '}</label>
-            <span>{this.state.user.zipcode}</span>
+          <div style={{ margin: '0 8px' }}>
+            <h4>My Posts</h4>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Job Title</th>
+                  <th scope="col">Zipcode</th>
+                  <th scope="col">Date Posted</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(this.state.user.posts).map((key, idx) => {
+                  let post = this.state.user.posts[key];
+                  let postDate = new Date(post.createdAt);
+                  let dateDisplay = `${postDate.getMonth()}/${postDate.getDate()}/${postDate.getFullYear()}`
+                  return (
+                    <tr key={key}>
+                      <th scope="row">{idx+1}</th>
+                      <td><Link to={`/jobs/${key}`}>{post.title}</Link></td>
+                      <td><section to={`/jobs/${key}`}>{post.zipcode}</section></td>
+                      <td><section to={`/jobs/${key}`}>{dateDisplay}</section></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
-
         {this.state.editMode
-        ? <>
-            <button onClick={this.handleEditOff}>cancel edit</button>
+        && <>
             <form onSubmit={this.handleSubmitEdit}>
               <div>
                 <label>email:{' '}</label>
@@ -124,10 +171,24 @@ class ProfilePage extends Component{
                 <label>profile image url:{' '}</label>
                 <input type="url" name="portraitUrl" value={this.state.editFields.portraitUrl} onChange={this.handleChangeField} />
               </div>
-              <input type="submit" value="submit" />
+              <div style={{ margin:'16px 40%'}}>
+                <input className="btn btn-success" type="submit" value="submit" />
+                <button className="btn btn-outline-danger" onClick={this.handleEditOff} type="button">
+                  cancel
+                </button>
+              </div>
             </form>
-          </>
-        : <button onClick={this.handleEditOn}>edit info</button>}
+          </>}
+          <h5 style={{ marginTop: 12 }}>Replies</h5>
+          {/* {this.state.user.replies.map((reply, idx) => (
+                <ReplyComponent
+                  key={`reply_${idx}`}
+                  userUsername={this.state.user.username}
+                  isAuthor={true}
+                  reply={reply}
+                  postId={reply.pos}
+                  addReply={this.addReply}
+                /> */}
       </>
     : <h2>Loading</h2>;
   }

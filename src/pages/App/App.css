@@ -1,3 +1,14 @@
 .App {
   margin: 0 5%;
 }
+
+h2 {
+  text-align: center;
+  margin: 32px 0 !important;
+}
+
+form:not(.post-form) div {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 35%
+}

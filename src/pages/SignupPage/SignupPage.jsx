@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import userService from '../../utils/authService';
-import { Base64 } from 'js-base64';
 
 class SignupPage extends Component {
 	state = {
@@ -46,7 +45,7 @@ class SignupPage extends Component {
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.setState({ portraitUrl: Base64.encodeURI(this.state.portraitUrl)}, () => {
+		this.setState({ portraitUrl: this.state.portraitUrl }, () => {
 			userService.signup(this.state, (error) => {
 				if(!!error) {
 					if(error.name === "ValidationError") {
@@ -57,7 +56,7 @@ class SignupPage extends Component {
 					} else console.log(error);
 				} else {
 					this.props.handleLogin();
-					this.props.history.push('/profile')
+					this.props.history.push('/jobs/new')
 				} 
 			});
 		});
@@ -65,7 +64,7 @@ class SignupPage extends Component {
 	
 	render() {
 		return <>
-			<h2>Signup Page</h2>
+			<h2>Signup to get it done</h2>
 			<form onSubmit={this.handleSubmit}>
 				<div>
 					<label>username:{' '}</label>
@@ -99,7 +98,9 @@ class SignupPage extends Component {
 					<label>profile image url:{' '}</label>
 					<input type="url" name="portraitUrl" value={this.state.portraitUrl} onChange={this.handleChangeField} />
 				</div>
-				<input type="submit" value="submit" />
+				<div style={{ justifyContent: 'center', margin:'16px 0'}}>
+					<input className="btn btn-success" type="submit" value="submit" />
+				</div>
 			</form>
 		</>;
 	}

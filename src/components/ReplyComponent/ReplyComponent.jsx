@@ -68,19 +68,37 @@ class ReplyComponent extends Component {
   render() {
     return <div style = {{
       margin: '2px 0',
-      border: '1px solid black',
+      border: '1px solid darkgray',
+      borderRadius: 4,
       padding: '4px'
     }}>
       <div>
         {this.props.isAuthor &&
-          <button onClick={this.toggleExpand}>{
-            this.state.expanded ? '-' : '+'
-          }</button>}
+          (this.state.expanded
+          ? <button style={{
+              padding: 0,
+              width: '1em',
+              height: '1em',
+              lineHeight: 0,
+              display: 'inline'
+            }} className="btn btn-sm btn-outline-secondary" onClick={this.toggleExpand}>
+              <i className="fa fa-minus-square-o" aria-hidden="true" />
+            </button>
+          : <button style={{
+              padding: 0,
+              width: '1em',
+              height: '1em',
+              lineHeight: 0,
+              display: 'inline'
+            }} className="btn btn-sm btn-outline-success" onClick={this.toggleExpand}>
+              <i className="fa fa-plus-square-o" aria-hidden="true" />
+            </button>)}
+
         {!this.state.expanded
-        ? <label>{'  '}{this.props.reply.consumerUsername}</label>
+        ? <label>&nbsp;{this.props.reply.consumerUsername}</label>
         : this.props.isAuthor && 
             <>
-              <label>{'  '}message history with:{' '}</label>
+              <label>&nbsp;message history with:&nbsp;</label>
               <strong>{this.props.reply.consumerUsername}</strong>
             </>}
       </div>
@@ -94,12 +112,14 @@ class ReplyComponent extends Component {
                 justifyContent: 'space-between'
               }}>
                 <span>
-                  <strong>{message.authorUsername}:{' '}</strong>
+                  <strong>{message.authorUsername}:&nbsp;</strong>
                   <span>{message.body}</span>
                 </span>
                 {this.props.userUsername === message.authorUsername &&
                   <form data-idx={idx} onSubmit={this.handleDelete} style={{ display: 'inline' }}>
-                    <input type="submit" value="x" />
+                    <button className="btn btn-sm btn-danger">
+                      <i className="fa fa-times" aria-hidden="true"/>                  
+                    </button>
                   </form>}
               </span>
             </div>
@@ -109,8 +129,8 @@ class ReplyComponent extends Component {
             display: 'grid',
             gridTemplateColumns: '90% 10%'
           }}>
-            <input required type="text" placeholder="reply" style={{ width: '100%'}} onChange={this.handleChange} value={this.state.newMessage} />
-            <input type="submit" value="send" />
+            <input required type="text" placeholder="reply" style={{ width: '100%' }} onChange={this.handleChange} value={this.state.newMessage} />
+            <input className="btn btn-success" type="submit" value="send" />
           </form>
         </div>}
     </div>;
